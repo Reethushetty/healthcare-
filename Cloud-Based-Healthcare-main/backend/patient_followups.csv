@@ -1,0 +1,24 @@
+Patient ID,Patient Name,Problem Type,Readmission Probability,Risk Label,Followup Channel,Next Visit,Simulation Date,Hospital Unit,Prediction Date,Status
+ADM6000,Raghul,Heart Disease,0.4806,Medium,SMS + App,5 days,,,2025-11-10,Pending
+ADM6000,tinku,Diabetes,0.4033,Medium,SMS + App,5 days,,,2025-11-10,Pending
+ADM1234,Raghul,Heart Disease,0.1943,Low,Portal / Email,14 days,,,2025-11-10,Pending
+ADM9000,Raghul,Diabetes,0.356,Low,Portal / Email,14 days,,,2025-11-10,Pending
+ADM9000,Raghul,Diabetes,0.5439,Medium,SMS + App,5 days,,,2025-11-10,Pending
+ADM9000,Raghul,Heart Disease,0.4496,Medium,SMS + App,5 days,,,2025-11-10,Pending
+ADM6000,tinku,Diabetes,0.4175,Medium,SMS + App,5 days,,,2025-11-10,Pending
+ADM6000,tinku,Diabetes,0.4175,Medium,SMS + App,5 days,,,2025-11-10,Pending
+ADM6000,tinku,Diabetes,0.4175,Medium,SMS + App,5 days,,,2025-11-10,Pending
+ADM6000,tinku,Diabetes,0.4175,Medium,SMS + App,5 days,,,2025-11-10,Pending
+ADM6000,tinku,Diabetes,0.4175,Medium,SMS + App,5 days,,,2025-11-10,Pending
+ADM6000,Raghu,Heart Disease,0.8045,High,Phone + SMS + App,48 hours,,,2025-11-10,Pending
+ADM1234,sahithi,Heart Disease,0.2452,Low,Portal / Email,14 days,,,2025-11-10,Pending
+ADM1234,tinku,Heart Disease,0.1608,Low,Portal / Email,14 days,,,2025-11-11,Pending
+ADM2000,fttd,Diabetes,0.776,High,Phone + SMS + App,48 hours,,,2025-11-11,Pending
+ADM 12345,Mary Smith,Heart Disease,0.6577,Medium,SMS + App,5 days,,,2025-11-11,Pending
+ADM2000,Raghul,Heart Disease,0.6337,Medium,SMS + App,5 days,,,2025-11-11,Pending
+ADM2000,Raghul,Diabetes,0.5002,Medium,SMS + App,5 days,,,2025-11-11,Pending
+ADM2000,fttd,Heart Disease,0.7806,High,Phone + SMS + App,48 hours,,,2025-11-11,Pending
+ADM2000,reethu,Heart Disease,0.2022,Low,Portal / Email,14 days,,,2025-11-11,Pending
+ADM2000,reethu,Diabetes,0.2319,Low,Portal / Email,14 days,,,2025-11-11,Pending
+ADM6000,Raghu,Diabetes,0.5071,Medium,SMS + App,5 days,,,2025-11-11,Pending
+ADM2000,hema,Diabetes,0.8426,High,Phone + SMS + App,48 hours,N/A,N/A,2025-11-11,Pending

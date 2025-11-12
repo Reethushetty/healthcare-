@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UMKC Hospital Analytics - Readmission Risk</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="top-header">
+      <h1><span class="umkc">UMKC</span> <span class="hospital">Hospital Analytics</span></h1>
+      <p>Readmission risk prediction, staffing simulation, and follow-up intelligence.</p>
+    </header>
+
+    <main class="main-grid">
+      <!-- LEFT: FORM -->
+      <section class="card">
+        <h2>Patient & Clinical Details</h2>
+
+        <form id="prediction-form">
+          <!-- Patient meta -->
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Patient ID</label>
+              <input type="text" id="patient_id" placeholder="ADM1234">
+            </div>
+            <div class="form-group">
+              <label>Patient Name</label>
+              <input type="text" id="patient_name" placeholder="John Doe">
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Admission Date</label>
+              <input type="date" id="admission_date">
+            </div>
+            <div class="form-group">
+              <label>Discharge Date</label>
+              <input type="date" id="discharge_date">
+            </div>
+          </div>
+
+          <!-- Problem & Demographics -->
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Problem Type</label>
+              <select id="problem_type" required>
+                <option value="Diabetes">Diabetes</option>
+                <option value="Heart Disease">Heart Disease</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Age</label>
+              <input type="number" id="age" min="0" required>
+            </div>
+            <div class="form-group">
+              <label>Sex</label>
+              <select id="sex" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Weight (kg)</label>
+              <input type="number" id="weight" step="0.1" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Blood Pressure (e.g., 130/85)</label>
+              <input type="text" id="bp" placeholder="120/80" required>
+            </div>
+            <div class="form-group">
+              <label>Cholesterol (mg/dL)</label>
+              <input type="number" id="cholesterol" step="0.1" required>
+            </div>
+            <div class="form-group">
+              <label>Insulin Level</label>
+              <select id="insulin">
+                <option value="Normal">Normal</option>
+                <option value="Low">Low</option>
+                <option value="Moderate">Moderate</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Diabetics Status</label>
+              <select id="diabetics">
+                <option value="Normal">Normal</option>
+                <option value="Low">Low</option>
+                <option value="Moderate">Moderate</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Diabetes specific -->
+          <div id="diabetes-fields" class="grid-2 conditional">
+            <div class="form-group">
+              <label>Hemoglobin (g/dL)</label>
+              <input type="number" id="hb" step="0.1">
+            </div>
+            <div class="form-group">
+              <label>WBC Count (10^9/L)</label>
+              <input type="number" id="wbc" step="0.1">
+            </div>
+            <div class="form-group">
+              <label>Platelet Count (10^9/L)</label>
+              <input type="number" id="plt_count" step="0.1">
+            </div>
+            <div class="form-group">
+              <label>Urine Protein (mg/dL)</label>
+              <input type="number" id="urine_protein" step="0.1">
+            </div>
+            <div class="form-group">
+              <label>Urine Glucose (mg/dL)</label>
+              <input type="number" id="urine_glucose" step="0.1">
+            </div>
+          </div>
+
+          <!-- Heart specific -->
+          <div id="heart-fields" class="grid-2 conditional hidden">
+            <div class="form-group">
+              <label>ECG Result</label>
+              <select id="ecg">
+                <option value="Normal">Normal</option>
+                <option value="Borderline">Borderline</option>
+                <option value="Abnormal">Abnormal</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Pulse Rate (bpm)</label>
+              <input type="number" id="pulse" step="1">
+            </div>
+          </div>
+
+          <!-- External factors -->
+          <h3>External Factors</h3>
+          <div class="grid-3">
+            <div class="form-group">
+              <label>Air Quality Index</label>
+              <input type="number" id="aqi" value="80">
+            </div>
+            <div class="form-group">
+              <label>Social Event Count</label>
+              <input type="number" id="events" value="0">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">Predict Readmission Risk</button>
+        </form>
+      </section>
+
+      <!-- RIGHT: RESULTS & VISUALS -->
+      <section class="card hidden" id="result-card">
+        <h2>Prediction & Insights</h2>
+
+        <div id="prediction-summary">
+          <p><strong>Disease:</strong> <span id="out-disease">-</span></p>
+          <p><strong>Predicted Readmission:</strong> <span id="out-prediction">-</span></p>
+          <p><strong>Risk Score:</strong> <span id="out-score">-</span></p>
+          <p><strong>Risk Level:</strong> <span id="out-risk-label">-</span></p>
+        </div>
+
+        <h3>Follow-up Recommendation</h3>
+        <p id="out-followup"></p>
+
+        <!-- Simulation -->
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Simulation Date</label>
+            <input type="date" id="simulation_date">
+          </div>
+          <div class="form-group">
+            <label>Hospital / Unit</label>
+            <select id="hospital_unit">
+              <option value="UMKC Main Hospital">UMKC Main Hospital</option>
+              <option value="UMKC South Unit">UMKC South Unit</option>
+              <option value="UMKC City Clinic">UMKC City Clinic</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="button" id="run-simulation" class="btn-primary">Run Staffing Simulation</button>
+        </div>
+
+        <p id="simulation-output" class="hidden"></p>
+
+        <h3>Staffing Simulator (Indicative)</h3>
+        <p id="out-staffing"></p>
+
+        <div class="charts-grid">
+          <div class="chart-wrap">
+            <h4>Risk Score Visualization</h4>
+            <canvas id="riskChart"></canvas>
+          </div>
+          <div class="chart-wrap">
+            <h4>Expected Resource Load</h4>
+            <canvas id="staffChart"></canvas>
+          </div>
+        </div>
+
+        <button id="download-pdf" class="btn-secondary">Download PDF Report</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
